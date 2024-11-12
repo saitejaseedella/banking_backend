@@ -82,7 +82,8 @@ public class AppController {
         user = (User) session.getAttribute("user");
 
 
-        int userId =Integer.parseInt(user.getUser_id());
+                    int userId =Integer.parseInt(user.getUser_id());
+
 
         //Get Transaction History Records
         List<TransactionHistory> userTransactionHistory = transactHistoryRepository.getTransactionRecordsById(userId);
@@ -103,7 +104,7 @@ public class AppController {
         int accountId = Integer.parseInt(account_id);
 
         //Get Transaction History Records
-        List<TransactionHistory> accountTransactionHistory = transactHistoryRepository.getTransactionRecordsByAccountId(accountId);
+        List<TransactionHistory> accountTransactionHistory = transactHistoryRepository.getTransactionRecordsById(accountId);
 
         Map<String, List> response = new HashMap<>();
         response.put("transaction_history", accountTransactionHistory); // veya başka verileri ekleyebilirsiniz

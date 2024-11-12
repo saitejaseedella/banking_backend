@@ -81,7 +81,7 @@ public class TransactController {
         accountRepository.changeAccountsBalanceById(newBalance, acc_id);
 
         //Log Successfull Transaction:
-        transactRepository.logTransaction(acc_id, "deposit", depositAmountValue, "online", "success", "Deposit Transaction Successfull", currentDateTime);
+        transactRepository.logTransaction(acc_id, "deposit", depositAmountValue, "online", "success", "Deposit Transaction Successfull", currentDateTime, user_id);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Amount Deposited Successfully.");
@@ -130,7 +130,7 @@ public class TransactController {
         //TODO: CHECK IF TRANSFER AMOUNT IS MORE THAN CURRENT BALANCE:
         if (currentBalanceOfAccountTransferringFrom < transferAmount) {
             //Log Failed Transaction
-            transactRepository.logTransaction(transferFromId, "transfer", transferAmount, "online", "failed", "Insufficient funds.", currentDateTime);
+            transactRepository.logTransaction(transferFromId, "transfer", transferAmount, "online", "failed", "Insufficient funds.", currentDateTime,user_id);
             return ResponseEntity.badRequest().body("You have insufficient Funds to perform this transfer.");
         }
         Double currentBalanceOfAccountTransferringTo = accountRepository.getAccountBalance(user_id, transferToId);
@@ -153,7 +153,7 @@ public class TransactController {
         accountRepository.changeAccountsBalanceById(newBalanceOfAccountTransferringTo, transferToId);
 
         //Log Successfull Transaction:
-        transactRepository.logTransaction(transferFromId, "Transfer", transferAmount, "online", "success", "Transfer Transaction Successfull", currentDateTime);
+        transactRepository.logTransaction(transferFromId, "Transfer", transferAmount, "online", "success", "Transfer Transaction Successfull", currentDateTime,user_id);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Transfer completed successfully.");
@@ -194,7 +194,7 @@ public class TransactController {
         //TODO: CHECK IF WITHDRAW AMOUNT IS MORE THAN CURRENT BALANCE:
         if (currentBalance < withdrawal_amount) {
             //Log Failed Transaction
-            transactRepository.logTransaction(account_id, "withdrawal", withdrawal_amount, "online", "failed", "Insufficient funds.", currentDateTime);
+            transactRepository.logTransaction(account_id, "withdrawal", withdrawal_amount, "online", "failed", "Insufficient funds.", currentDateTime,user_id);
             return ResponseEntity.badRequest().body("You have insufficient Funds to perform this transfer.");
         }
 
@@ -206,7 +206,7 @@ public class TransactController {
 
 
         //Withdrawal Successfull Transaction
-        transactRepository.logTransaction(account_id, "Withdrawal", withdrawal_amount,"online","success","Withdrawal Transaction Successfull",currentDateTime);
+        transactRepository.logTransaction(account_id, "Withdrawal", withdrawal_amount,"online","success","Withdrawal Transaction Successfull",currentDateTime,user_id);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Withdrawal Successfull!");
@@ -253,7 +253,7 @@ public class TransactController {
             String reasonCode = "Coult not Processed Payment due to insufficient funds.";
             paymentRepository.makePayment(accountID, beneficiary, account_number, paymentAmount, reference, "failed", reasonCode, currentDateTime);
             //Log Failed Transaction
-            transactRepository.logTransaction(accountID, "Payment", paymentAmount, "online", "failed", "Insufficient funds.", currentDateTime);
+            transactRepository.logTransaction(accountID, "Payment", paymentAmount, "online", "failed", "Insufficient funds.", currentDateTime,user_id);
             return ResponseEntity.badRequest().body("You have insufficient Funds to perform this payment.");
         }
 
@@ -269,7 +269,7 @@ public class TransactController {
         paymentRepository.makePayment(accountID, beneficiary, account_number, paymentAmount, reference, "success", reasonCode, currentDateTime);
 
         //Log successfull transaction:
-        transactRepository.logTransaction(accountID, "Payment", paymentAmount,"online","success","Payment Transaction Successfull",currentDateTime);
+        transactRepository.logTransaction(accountID, "Payment", paymentAmount,"online","success","Payment Transaction Successfull",currentDateTime,user_id);
 
         Map<String, Object> response = new HashMap<>();
         response.put("message", reasonCode);

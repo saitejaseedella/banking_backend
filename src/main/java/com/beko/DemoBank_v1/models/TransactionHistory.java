@@ -6,7 +6,7 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "v_transaction_history")
+@Table(name = "transaction_history")
 public class TransactionHistory {
 
     @Id
@@ -17,6 +17,7 @@ public class TransactionHistory {
     private String source;
     private String status;
     private String reason_code;
+    private String user_id;
 
     private LocalDateTime created_at;
 
@@ -31,6 +32,9 @@ public class TransactionHistory {
     public int getTransaction_id() {
         return transaction_id;
     }
+    public String getUser_id() {
+        return user_id;
+    }
 
     public void setTransaction_id(int transaction_id) {
         this.transaction_id = transaction_id;
@@ -42,6 +46,9 @@ public class TransactionHistory {
 
     public void setAccount_id(int account_id) {
         this.account_id = account_id;
+    }
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getTransaction_type() {

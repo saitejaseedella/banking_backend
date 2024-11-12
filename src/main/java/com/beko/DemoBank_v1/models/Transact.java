@@ -17,9 +17,13 @@ public class Transact {
     private String source;
     private String status;
     private String reason_code;
+    private int user_id;
 
     public int getTransaction_id() {
         return transaction_id;
+    }
+    public int getUser_id() {
+        return user_id;
     }
 
     public void setTransaction_id(int transaction_id) {
@@ -56,6 +60,9 @@ public class Transact {
 
     public void setSource(String source) {
         this.source = source;
+    }
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getStatus() {

@@ -14,13 +14,15 @@ import java.time.LocalDateTime;
 public interface TransactRepository extends CrudRepository<Transact, Integer> {
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO transaction_history(account_id, transaction_type, amount, source, status, reason_code, created_at)" +
-            "VALUES(:account_id, :transaction_type, :amount, :source, :status, :reason_code, :created_at)",nativeQuery = true)
+    @Query(value = "INSERT INTO transaction_history(account_id, transaction_type, amount, source, status, reason_code, created_at,user_id)" +
+            "VALUES(:account_id, :transaction_type, :amount, :source, :status, :reason_code, :created_at,:user_id)",nativeQuery = true)
     void logTransaction(@Param("account_id")int account_id,
                         @Param("transaction_type")String transaction_type,
                         @Param("amount")double amount,
                         @Param("source")String source ,
                         @Param("status")String status,
                         @Param("reason_code")String reason_code,
-                        @Param("created_at")LocalDateTime created_at);
+                        @Param("created_at")LocalDateTime created_at,
+                        @Param("user_id")int user_id
+    );
 }

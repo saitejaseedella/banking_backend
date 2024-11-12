@@ -21,7 +21,7 @@ public class JwtService {
 
 
 
-    private long expiresIn = 86400;
+    private long expiresIn = 86400000;
 
 
     public String generateToken(String userEmail) {
